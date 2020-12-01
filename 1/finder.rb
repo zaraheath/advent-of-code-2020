@@ -10,6 +10,7 @@ class Finder
     entries.combination(num_entries).each do |comb|
       if comb.sum == sum_goal
         result = comb.inject(:*)
+        break
       end
     end
     result
