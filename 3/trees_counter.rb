@@ -1,26 +1,25 @@
 class TreesCounter
-  INCREMENT_X = 3
-  INCREMENT_Y = 1
-
   def self.run(**args)
     new(**args).run
   end
 
-  attr_reader :matrix
-  def initialize(input_file:)
+  attr_reader :matrix, :increment_x, :increment_y
+  def initialize(input_file:, increment_x:, increment_y:)
     @matrix = load_matrix(input_file)
+    @increment_x = increment_x
+    @increment_y = increment_y
   end
 
   def run
-    x = INCREMENT_X
-    y = INCREMENT_Y
+    x = increment_x
+    y = increment_y
     trees = 0
     while !matrix[y].nil? && !matrix[y][x].nil?
       if matrix[y][x] == "#"
         trees = trees + 1
       end
-      y = y + INCREMENT_Y
-      x = x + INCREMENT_X
+      y = y + increment_y
+      x = x + increment_x
       if matrix[y].nil?
         break
       end
@@ -40,4 +39,10 @@ class TreesCounter
   end
 end
 
-puts "Trees: #{TreesCounter.run(input_file: "input.txt")}"
+result = []
+[[1,1], [3,1], [5,1], [7,1], [1,2]].each do |increment|
+  trees = TreesCounter.run(input_file: "input.txt", increment_x: increment.first, increment_y: increment.last)
+  puts "Trees (#{increment.first},#{increment.last}) = #{trees}"
+  result << trees
+end
+puts "Final result: #{result.inject(:*)}"
