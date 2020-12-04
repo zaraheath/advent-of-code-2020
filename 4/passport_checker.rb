@@ -1,24 +1,5 @@
-class YearValidator
-  attr_reader :year
-  def initialize(year)
-    @year = year
-  end
-
-  def valid?(num_digits:, start_value:, end_value:)
-    year.to_s.size == num_digits && (start_value..end_value).include?(year)
-  end
-end
-
-class Year
-  def self.valid?(year_str)
-    new(year_str).valid?
-  end
-
-  attr_reader :year
-  def initialize(year_str)
-    @year = year_str.to_i
-  end
-end
+require_relative "year_validator"
+require_relative "year"
 
 class Byr < Year
   def valid?
