@@ -9,7 +9,7 @@ class BinaryBoarding
     File.open(input_file).each do |line|
       seats << calculate_seat(line)
     end
-    seats.max
+    missing_seat(seats)
   end
 
 private
@@ -24,6 +24,17 @@ private
 
   def row(line)
     line[0,7].gsub("F", "0").gsub("B", "1").to_i(2)
+  end
+
+  def missing_seat(seats)
+    missing_seat = nil
+    seats.sort!.each_with_index do |seat, i|
+      if seats[i + 1] == (seat + 2)
+        missing_seat = seat + 1
+        break
+      end
+    end
+    missing_seat
   end
 end
 
